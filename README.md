@@ -16,9 +16,13 @@ Core-features of the task:
 
 - Search Books: Search a book by name.
 
+- Implement persistence by saving the library's current state (books and users) to a text file and loading it back when the program starts.
+
 Future Enhancements:
 
-- Implement persistence by saving the library's current state (books and users) to a text file and loading it back when the program starts.
+- Extend functionality to manage and operate multiple libraries within the system.
+
+- Introduce the concept of quantity for books, allowing multiple copies to be tracked and borrowed.
   
 - Due Date Tracking: Add functionality to set due dates for borrowed books, and include reminders for overdue books.
   
