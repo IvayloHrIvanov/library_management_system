@@ -8,17 +8,21 @@ Core-features of the task:
 
 - Remove Books: Remove books from the library's collection.
   
-- Borrow Books: Allow users to borrow books from the library.
+- Borrow Books: Allow to borrow books from the library.
   
-- Return Books: Enable users to return borrowed books.
+- Return Books: Enable to return borrowed books.
   
 - List Available Books: Display all books currently available in the library.
 
 - Search Books: Search a book by name.
 
-- Implement persistence by saving the library's current state (books and users) to a text file and loading it back when the program starts.
+- Save Library: Save all library books to a text file
+  
+- Users: Add users that have roles and can do only set functions by role. 
 
 Future Enhancements:
+
+- Add more functionality to the Users
 
 - Extend functionality to manage and operate multiple libraries within the system.
 
