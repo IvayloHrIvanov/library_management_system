@@ -1,4 +1,4 @@
-package org.example;
+package org.library.management;
 
 public class Book extends LibraryServiceImpl {
     private final String title;

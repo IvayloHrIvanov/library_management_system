@@ -1,6 +1,6 @@
 package service;
 
-import org.example.Book;
+import org.library.management.Book;
 
 public interface LibraryService {
     void addBook(Book book) throws Exception;

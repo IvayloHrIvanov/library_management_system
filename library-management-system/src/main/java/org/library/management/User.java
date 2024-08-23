@@ -1,7 +1,8 @@
-package org.example;
+package org.library.management;
 
 import utility.GlobalLogger;
 
+// Enum representing different roles a user can have in the system
 enum Role {
     ADMIN,
     EMPLOYEE,

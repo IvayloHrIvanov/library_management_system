@@ -1,6 +1,7 @@
-package org.example;
+package org.library.management;
 
 import service.LibraryService;
+import utility.Helper;
 import utility.GlobalLogger;
 
 import java.io.FileOutputStream;
@@ -10,39 +11,45 @@ import java.util.Map;
 import java.util.Properties;
 
 public class LibraryServiceImpl implements LibraryService {
+    // Centralized storage for all books in the library using a HashMap
     private static final Map<String, Book> BOOKS_IN_LIBRARY = new HashMap<>();
 
+    // Adds a new book to the Library
     @Override
     public void addBook(Book book) {
+        // Prevents duplicate books from being added
         if (searchBook(book.getTitle()) != null) {
-            logAndPrintInfo("Book is already in the Library!", "Book is already in the Library while trying to add!");
+            Helper.logAndPrintInfo("Book is already in the Library!", "Book is already in the Library while trying to add!");
             return;
         }
 
         BOOKS_IN_LIBRARY.put(book.getTitle(), book);
-        logAndPrintInfo("Book is added to the Library!");
+        Helper.logAndPrintInfo("Book is added to the Library!");
     }
 
+    // Removes a book from the Library by title
     @Override
     public void removeBook(String title) {
         Book book = searchBook(title);
 
+        // Ensures the book exists and it's not borrowed
         if (book == null) {
-            logAndPrintInfo("Book is not in the Library!", "Book is not in the Library while trying to remove!");
+            Helper.logAndPrintInfo("Book is not in the Library!", "Book is not in the Library while trying to remove!");
             return;
         } else if (book.isBorrowed()) {
-            logAndPrintInfo("Book is borrowed. Please return the book before removing!", "Book is borrowed while trying to remove!");
+            Helper.logAndPrintInfo("Book is borrowed. Please return the book before removing!", "Book is borrowed while trying to remove!");
             return;
         }
 
         BOOKS_IN_LIBRARY.remove(title);
-        logAndPrintInfo("Book is removed");
+        Helper.logAndPrintInfo("Book is removed");
     }
 
+    // Lists all books currently in the Library.
     @Override
     public void listAllBooks() {
         if (BOOKS_IN_LIBRARY.isEmpty()) {
-            logAndPrintInfo("Sorry, the Library is empty right now!", "Library is empty when trying to list!");
+            Helper.logAndPrintInfo("Sorry, the Library is empty right now!", "Library is empty when trying to list!");
             return;
         }
 
@@ -52,43 +59,49 @@ public class LibraryServiceImpl implements LibraryService {
         GlobalLogger.logInfoInFile("800", "Listed books");
     }
 
+    // Searches for a book in the Library by title.
     @Override
     public Book searchBook(String title) {
         return BOOKS_IN_LIBRARY.get(title);
     }
 
+    // Borrows a book from the Library.
     @Override
     public void borrowBook(String title) {
         Book book = searchBook(title);
 
+        // Ensures the book exists and it's not borrowed
         if (book == null) {
-            logAndPrintInfo("Book not found in the library!", "Book is not found while trying to borrow!");
+            Helper.logAndPrintInfo("Book not found in the library!", "Book is not found while trying to borrow!");
             return;
         } else if (book.isBorrowed()) {
-            logAndPrintInfo("Sorry this book is already borrowed", "Book is borrowed while trying to borrow!");
+            Helper.logAndPrintInfo("Sorry this book is already borrowed", "Book is borrowed while trying to borrow!");
             return;
         }
 
         book.setBorrowed(true);
-        logAndPrintInfo("Book is borrowed from the Library!");
+        Helper.logAndPrintInfo("Book is borrowed from the Library!");
     }
 
+    // Returns a borrowed book to the Library.
     @Override
     public void returnBook(String title) {
         Book book = searchBook(title);
 
+        // Ensures the book exists and it's borrowed
         if (book == null) {
-            logAndPrintInfo("Book not found in the Library!", "Book not found in the Library while trying to return!");
+            Helper.logAndPrintInfo("Book not found in the Library!", "Book not found in the Library while trying to return!");
             return;
         } else if (!book.isBorrowed()) {
-            logAndPrintInfo("Sorry this book is not borrowed!", "Book is not borrowed while trying to return!");
+            Helper.logAndPrintInfo("Sorry this book is not borrowed!", "Book is not borrowed while trying to return!");
             return;
         }
 
         book.setBorrowed(false);
-        logAndPrintInfo("Book is returned to the Library!", "Book is returned to the Library!");
+        Helper.logAndPrintInfo("Book is returned to the Library!", "Book is returned to the Library!");
     }
 
+    // Exports the current library to a file.
     @Override
     public void exportLibrary() {
         Properties properties = new Properties();
@@ -99,7 +112,7 @@ public class LibraryServiceImpl implements LibraryService {
         }
 
         try {
-            properties.store(new FileOutputStream(pathForExport), null);
+            properties.store(new FileOutputStream(pathForExport), null); // Writes the properties to a file.
 
             System.out.println("Library is exported to: " + pathForExport);
             GlobalLogger.logInfoInFile("800", "Library is exported to: " + pathForExport);
@@ -108,15 +121,5 @@ public class LibraryServiceImpl implements LibraryService {
                     " or if directory you are trying to export is not restricted. For further information check the Log file\n");
             GlobalLogger.logExceptionsInFile("900", ioException.getMessage(), ioException);
         }
-    }
-
-    private void logAndPrintInfo(String consoleMessage, String logMessage) {
-        System.out.println(consoleMessage);
-        GlobalLogger.logInfoInFile("800", logMessage);
-    }
-
-    private void logAndPrintInfo(String message) {
-        System.out.println(message);
-        GlobalLogger.logInfoInFile("800", message);
     }
 }

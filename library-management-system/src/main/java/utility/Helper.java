@@ -1,13 +1,16 @@
-package helper;
+package utility;
 
-import org.example.User;
+import org.library.management.User;
 
 import java.util.Scanner;
 
 public class Helper {
+    // Scanner is used for reading user input throughout the application
     private static final Scanner SCANNER = new Scanner(System.in);
+    // Array of valid user roles to validate input against
     private static final String[] VALID_ROLES = {"admin", "employee", "client"};
 
+    // Displays the main menu options for the Library Management System
     public static void displayMenu() {
         System.out.println("\n1. Add a book");
         System.out.println("2. Remove a book");
@@ -20,13 +23,14 @@ public class Helper {
         System.out.println("9. Exit");
     }
 
-    public static void chooseUser() {
+    // Prompts the user to choose their role and validates the input
+    public static void chooseUserRole() {
         String userInput = "";
 
         System.out.print("\nPlease enter your role (Admin, Employee, Client): ");
 
         while (true) {
-            userInput = SCANNER.nextLine().trim();
+            userInput = SCANNER.nextLine().trim(); // Reads the input and removes any leading/trailing whitespace
 
             if (isValidRole(userInput)) {
                 User.setRole(userInput);
@@ -37,6 +41,7 @@ public class Helper {
         }
     }
 
+    // Checks if the provided role is valid by comparing it against the list of valid roles
     private static boolean isValidRole(String role) {
         for (String validRole : VALID_ROLES) {
             if (validRole.equalsIgnoreCase(role)) {
@@ -56,30 +61,43 @@ public class Helper {
             // Check if the next input is an integer
             if (SCANNER.hasNextInt()) {
                 userInput = SCANNER.nextInt();
-                SCANNER.nextLine();
+                SCANNER.nextLine(); // Clear the buffer
                 return userInput;
             } else {
                 System.out.println("Invalid input. Please enter a valid number.");
-                SCANNER.next();
+                SCANNER.next(); // Clear the invalid input
             }
         }
     }
 
+    // Prompts the user for a string input, ensures it's not empty and within a character limit
     public static String getStringInput(String prompt) {
         String userInput = "";
 
         while (true) {
             System.out.print(prompt);
-            userInput = SCANNER.nextLine().trim(); // read the entire line of input and trim() removes leading and trailing whitespace
+            userInput = SCANNER.nextLine().trim(); // Reads the input and removes any leading/trailing whitespace
 
             // Check if input is not empty
             if (userInput.isEmpty()) {
                 System.out.println("Input cannot be empty. Please provide a valid input.");
-            } else if (userInput.length() > 45) {
+            } else if (userInput.length() > 45) { // Ensure input is within the character limit
                 System.out.println("Input is too big! Max characters allowed: 1-45. Please provide a valid input!");
             } else {
                 return userInput;
             }
         }
+    }
+
+    // Utility method for logging and printing messages to console
+    public static void logAndPrintInfo(String consoleMessage, String logMessage) {
+        System.out.println(consoleMessage);
+        GlobalLogger.logInfoInFile("800", logMessage);
+    }
+
+    // Overloaded method to log and print messages when no logMessage is provided.
+    public static void logAndPrintInfo(String message) {
+        System.out.println(message);
+        GlobalLogger.logInfoInFile("800", message);
     }
 }
