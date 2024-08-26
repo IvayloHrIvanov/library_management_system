@@ -1,6 +1,8 @@
 package org.library.management;
 
 public class Book extends LibraryServiceImpl {
+    private static final StringBuilder sb = new StringBuilder();
+
     private final String title;
     private final String author;
     private final String description;
@@ -33,9 +35,18 @@ public class Book extends LibraryServiceImpl {
         isBorrowed = borrowed;
     }
 
+    public String toStringTitleAndAuthor(){
+        sb.setLength(0);
+
+        sb.append("[").append(this.title)
+                .append(" by ").append(this.author).append("]");
+
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
 
         sb.append("[").append(title)
                 .append(" by ").append(author)

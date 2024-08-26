@@ -3,7 +3,7 @@ package service;
 import org.library.management.Book;
 
 public interface LibraryService {
-    void addBook(Book book) throws Exception;
+    void addBook(Book book);
     void removeBook(String title);
     void listAllBooks();
     void borrowBook(String title);

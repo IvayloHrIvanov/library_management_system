@@ -72,7 +72,7 @@ public class Application {
                         }
 
                         System.out.println(foundBook.toString());
-                        GlobalLogger.logInfoInFile("800", "Book is found while searching!");
+                        GlobalLogger.logInfoInFile("800", "Book " + book.toStringTitleAndAuthor() + " is found while searching!");
                         break;
                     case 5:
                         // Borrow a book by title

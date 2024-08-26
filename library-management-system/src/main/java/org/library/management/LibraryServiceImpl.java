@@ -19,12 +19,12 @@ public class LibraryServiceImpl implements LibraryService {
     public void addBook(Book book) {
         // Prevents duplicate books from being added
         if (searchBook(book.getTitle()) != null) {
-            Helper.logAndPrintInfo("Book is already in the Library!", "Book is already in the Library while trying to add!");
+            Helper.logAndPrintInfo("Book " + book.toStringTitleAndAuthor() + " is already in the Library!", "Book " + book.toStringTitleAndAuthor() + " is already in the Library while trying to add!");
             return;
         }
 
         BOOKS_IN_LIBRARY.put(book.getTitle(), book);
-        Helper.logAndPrintInfo("Book is added to the Library!");
+        Helper.logAndPrintInfo("Book: " + book.toStringTitleAndAuthor() + " is added to the Library!");
     }
 
     // Removes a book from the Library by title
@@ -37,12 +37,12 @@ public class LibraryServiceImpl implements LibraryService {
             Helper.logAndPrintInfo("Book is not in the Library!", "Book is not in the Library while trying to remove!");
             return;
         } else if (book.isBorrowed()) {
-            Helper.logAndPrintInfo("Book is borrowed. Please return the book before removing!", "Book is borrowed while trying to remove!");
+            Helper.logAndPrintInfo("Book " + book.toStringTitleAndAuthor() + " is borrowed. Please return the book before removing!", "Book " + book.toStringTitleAndAuthor() + " is borrowed while trying to remove!");
             return;
         }
 
         BOOKS_IN_LIBRARY.remove(title);
-        Helper.logAndPrintInfo("Book is removed");
+        Helper.logAndPrintInfo("Book " + book.toStringTitleAndAuthor() + " is removed");
     }
 
     // Lists all books currently in the Library.
@@ -56,6 +56,7 @@ public class LibraryServiceImpl implements LibraryService {
         for (Book book : BOOKS_IN_LIBRARY.values()) {
             System.out.println(book.toString());
         }
+
         GlobalLogger.logInfoInFile("800", "Listed books");
     }
 
@@ -75,12 +76,12 @@ public class LibraryServiceImpl implements LibraryService {
             Helper.logAndPrintInfo("Book not found in the library!", "Book is not found while trying to borrow!");
             return;
         } else if (book.isBorrowed()) {
-            Helper.logAndPrintInfo("Sorry this book is already borrowed", "Book is borrowed while trying to borrow!");
+            Helper.logAndPrintInfo("Sorry this book " + book.toStringTitleAndAuthor() + " is already borrowed", "Book " + book.toStringTitleAndAuthor() + " is borrowed while trying to borrow!");
             return;
         }
 
         book.setBorrowed(true);
-        Helper.logAndPrintInfo("Book is borrowed from the Library!");
+        Helper.logAndPrintInfo("Book " + book.toStringTitleAndAuthor() + " is borrowed from the Library!");
     }
 
     // Returns a borrowed book to the Library.
@@ -93,19 +94,19 @@ public class LibraryServiceImpl implements LibraryService {
             Helper.logAndPrintInfo("Book not found in the Library!", "Book not found in the Library while trying to return!");
             return;
         } else if (!book.isBorrowed()) {
-            Helper.logAndPrintInfo("Sorry this book is not borrowed!", "Book is not borrowed while trying to return!");
+            Helper.logAndPrintInfo("Sorry this book " + book.toStringTitleAndAuthor() + " is not borrowed!", "Book " + book.toStringTitleAndAuthor() + " is not borrowed while trying to return!");
             return;
         }
 
         book.setBorrowed(false);
-        Helper.logAndPrintInfo("Book is returned to the Library!", "Book is returned to the Library!");
+        Helper.logAndPrintInfo("Book " + book.toStringTitleAndAuthor() + " is returned to the Library!", "Book " + book.toStringTitleAndAuthor() + " is returned to the Library!");
     }
 
     // Exports the current library to a file.
     @Override
     public void exportLibrary() {
         Properties properties = new Properties();
-        String pathForExport = "C:\\Users\\halo3\\Desktop\\Books.txt";
+        String pathForExport = "C:\\Books.txt";
 
         for (Map.Entry<String, Book> entry : BOOKS_IN_LIBRARY.entrySet()) {
             properties.put(entry.getKey(), entry.getValue().toString());

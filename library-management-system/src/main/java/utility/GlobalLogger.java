@@ -6,7 +6,7 @@ import java.util.logging.*;
 public class GlobalLogger extends FileHandler {
     private static final Logger GLOBAL_LOGGER = Logger.getLogger(GlobalLogger.class.getName());
     private static FileHandler fileHandler;
-    private static final String LOG_FILE_PATH = "C:\\Users\\halo3\\Desktop\\Log.log"; // Default path for the log file
+    private static final String LOG_FILE_PATH = "C:\\Log.log"; // Default path for the log file
 
     static {
         try {
