@@ -1,28 +1,33 @@
 package org.library.management;
 
+import DB.DBConnection;
 import utility.Helper;
 import utility.GlobalLogger;
 
 public class Application {
+    private static final DBConnection DB_CONNECTION = new DBConnection();
+
     // Book object initialized with null values, serves as a placeholder for future book operations.
     private static Book book = new Book(null, null, null);
 
     public static void run() {
-        // Variables for storing book details and user role
-        String title = "";
-        String author = "";
-        String description = "";
-        String userRole = "";
+        try {
+            DB_CONNECTION.connectToDB();
 
-        int choice = 0; // Stores user choice from the menu
+            // Variables for storing book details and user role
+            String title = "";
+            String author = "";
+            String description = "";
+            String userRole = "";
 
-        boolean shouldRun = true; // Controls the main loop of the application
+            int choice = 0; // Stores user choice from the menu
 
-        System.out.println("\nWelcome to the Library Management System!");
-        Helper.chooseUserRole(); // Asks the user to choose their role
+            boolean shouldRun = true; // Controls the main loop of the application
 
-        while (shouldRun) {
-            try {
+            System.out.println("\nWelcome to the Library Management System!");
+            Helper.chooseUserRole(); // Asks the user to choose their role
+
+            while (shouldRun) {
                 Helper.displayMenu(); // Displays the menu options
                 choice = Helper.getIntInput("\nPlease enter the number corresponding to the function you want: ");
                 userRole = User.getRole(); // Saves the current user's role
@@ -104,15 +109,14 @@ public class Application {
                         System.out.println("Please enter a valid number corresponding to the function you want in the list!");
                         break;
                 }
-
-            } catch (Exception e) {
-                // Catch any unexpected exceptions to prevent the program from crashing
-                System.err.println("\nUnexpected exception occurred: " + e.getMessage() + ". For further information check the Log file.");
-                GlobalLogger.logExceptionsInFile("1000", e.getMessage(), e);
-
-                // Attempt to restart the main loop after an exception
-                System.out.println("\nAttempting to launch the program again!\n");
             }
+        } catch (Exception e) {
+            // Catch any unexpected exceptions to prevent the program from crashing
+            System.err.println("\nUnexpected exception occurred: " + e.getMessage() + ". For further information check the Log file.");
+            GlobalLogger.logExceptionsInFile("1000", e.getMessage(), e);
+
+            // Attempt to restart the main loop after an exception
+            System.out.println("\nAttempting to launch the program again!\n");
         }
     }
 }
