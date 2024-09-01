@@ -92,12 +92,12 @@ public class Helper {
     // Utility method for logging and printing messages to console
     public static void logAndPrintInfo(String consoleMessage, String logMessage) {
         System.out.println(consoleMessage);
-        GlobalLogger.logInfoInFile("800", logMessage);
+        GlobalLogger.logEventInFile("800", logMessage);
     }
 
     // Overloaded method to log and print messages when no logMessage is provided.
     public static void logAndPrintInfo(String message) {
         System.out.println(message);
-        GlobalLogger.logInfoInFile("800", message);
+        GlobalLogger.logEventInFile("800", message);
     }
 }

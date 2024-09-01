@@ -21,7 +21,7 @@ public class User{
             role = Role.valueOf(userRole.toUpperCase());
         } catch (IllegalArgumentException illegalArgumentException) {
             System.err.println("Role could not be set! For further information check the Log file.");
-            GlobalLogger.logExceptionsInFile("900", illegalArgumentException.getMessage(), illegalArgumentException);
+            GlobalLogger.logExceptionInFile("900", illegalArgumentException.getMessage(), illegalArgumentException);
         }
     }
 }

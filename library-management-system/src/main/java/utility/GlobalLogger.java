@@ -6,7 +6,7 @@ import java.util.logging.*;
 public class GlobalLogger extends FileHandler {
     private static final Logger GLOBAL_LOGGER = Logger.getLogger(GlobalLogger.class.getName());
     private static FileHandler fileHandler;
-    private static final String LOG_FILE_PATH = "C:\\Log.log"; // Default path for the log file
+    private static final String LOG_FILE_PATH = "D:\\Log.log"; // Default path for the log file
 
     static {
         try {
@@ -32,11 +32,11 @@ public class GlobalLogger extends FileHandler {
     }
 
     //Set error level and append it to a file
-    public static void logExceptionsInFile(String warningLevel, String errorMessage, Exception e) {
+    public static void logExceptionInFile(String warningLevel, String errorMessage, Exception e) {
         GLOBAL_LOGGER.log(Level.parse(warningLevel), errorMessage, e);
     }
 
-    public static void logInfoInFile(String warningLevel, String infoMessage) {
+    public static void logEventInFile(String warningLevel, String infoMessage) {
         GLOBAL_LOGGER.log(Level.parse(warningLevel), infoMessage);
     }
 }

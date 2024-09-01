@@ -57,7 +57,7 @@ public class LibraryServiceImpl implements LibraryService {
             System.out.println(book.toString());
         }
 
-        GlobalLogger.logInfoInFile("800", "Listed books");
+        GlobalLogger.logEventInFile("800", "Listed books");
     }
 
     // Searches for a book in the Library by title.
@@ -106,7 +106,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void exportLibrary() {
         Properties properties = new Properties();
-        String pathForExport = "C:\\Books.txt";
+        String pathForExport = "D:\\Books.txt";
 
         for (Map.Entry<String, Book> entry : BOOKS_IN_LIBRARY.entrySet()) {
             properties.put(entry.getKey(), entry.getValue().toString());
@@ -116,11 +116,11 @@ public class LibraryServiceImpl implements LibraryService {
             properties.store(new FileOutputStream(pathForExport), null); // Writes the properties to a file.
 
             System.out.println("Library is exported to: " + pathForExport);
-            GlobalLogger.logInfoInFile("800", "Library is exported to: " + pathForExport);
+            GlobalLogger.logEventInFile("800", "Library is exported to: " + pathForExport);
         } catch (IOException ioException) {
             System.err.println("Library could not be exported! Check if there isn't a directory with the same name as the file name" +
                     " or if directory you are trying to export is not restricted. For further information check the Log file\n");
-            GlobalLogger.logExceptionsInFile("900", ioException.getMessage(), ioException);
+            GlobalLogger.logExceptionInFile("900", ioException.getMessage(), ioException);
         }
     }
 }
