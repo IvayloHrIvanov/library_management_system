@@ -1,6 +1,6 @@
 package org.library.management;
 
-import DB.DBConnection;
+import db.DBConnection;
 import utility.Helper;
 import utility.GlobalLogger;
 

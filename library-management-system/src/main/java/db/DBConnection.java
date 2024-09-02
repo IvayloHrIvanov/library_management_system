@@ -1,4 +1,4 @@
-package DB;
+package db;
 
 import utility.GlobalLogger;
 
@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
+    public static Connection connection = null;
+
     private static final String URL = "jdbc:postgresql://localhost:5432/library";
     private static final String USER = "postgres";
     private static final String PASSWORD = "1634";
@@ -17,7 +19,7 @@ public class DBConnection {
     public void connectToDB() {
        try {
             // Try to establish connection
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
             System.out.println("Connection to Database - Established");
         } catch (SQLException sqlException) {
